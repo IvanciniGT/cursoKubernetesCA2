@@ -15,3 +15,13 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 # En nuestro caso... que estamos montando un cluster de juguete
 # kubectl taint nodes --all node-role.kubernetes.io/master-
 # Esto nunca lo haríamos en un entorno de producción
+
+
+
+            Service mess !!!!
+ISTIO                VV
+Linkerd     Service Mesh ;)
+
+TLS:
+    Man in the middle <<<<
+    Phishing

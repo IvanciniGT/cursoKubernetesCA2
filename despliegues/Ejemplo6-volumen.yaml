@@ -1,3 +1,4 @@
+# SISTEMAS
 # Tipo de objeto
 kind: PersistentVolume
 # Libreria dentro de Kubernetes que contien la definición de ese tipo de objeto
@@ -9,7 +10,7 @@ metadata:
 spec:
     storageClassName: rapidito-redundante # Tipo de volumen que necesito (Caractersisticas del volumen)
     capacity:
-            storage: 8Gi
+            storage: 18Gi
     accessModes:
         - ReadWriteOnce
         

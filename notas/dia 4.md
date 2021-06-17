@@ -86,3 +86,7 @@ ESTO ERA ANTES... Esto ha cambiado    Utilizar los mismo prefijos del SI medidas
 
 
 1 Gi: 1024 Mi = 1024 x 1024 Ki = 1024 x 1024 x 1024 b
+
+
+        persistentVolumeClaim:
+              claimName: 

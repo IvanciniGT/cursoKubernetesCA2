@@ -26,6 +26,7 @@ Lo vamos a hacer en algún momento? NO NUNCA EN LA VIDA
     
 ### StatefulSet
     Plantilla de Pod
+    Plantilla de Peticion de volumen persistente
     Número de replicas deseado para esa plantilla
     
 ### DaemonSet

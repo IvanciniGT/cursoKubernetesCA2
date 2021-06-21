@@ -27,7 +27,9 @@ apiVersion: apps/v1
 
 metadata:
     name: es-master
-
+    labels: 
+        app: es-master
+        
 spec:
 
     replicas: 3
@@ -39,8 +41,8 @@ spec:
 
     selector:
         matchLabels:
-            name: es-master
-    
+            app: es-master
+
     serviceName: es-master-svc
     #   es-master-svc
     #   es-master-0.es-master-svc
@@ -51,7 +53,7 @@ spec:
         metadata:
             labels: 
                 app: es-master
-        
+
         spec:
             containers:
                 -   name: elasticsearch

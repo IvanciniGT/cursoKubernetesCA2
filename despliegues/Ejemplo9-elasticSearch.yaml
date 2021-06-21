@@ -190,3 +190,181 @@ spec:
                         storage: 5Gi
                 accessModes:
                     - ReadWriteOnce
+
+#########################################################################################################
+###     INGESTA
+#########################################################################################################
+---
+
+kind: Service
+apiVersion: v1
+
+metadata:
+    name: es-ingest-svc
+
+spec:
+    type: ClusterIP # Este servicio no es privado, ya que se usa por clientes finales.
+                    # No obstante esto lo normal será publicarlo / exponerlo mediante un INGRESS CONTROLLER
+                    # Por lo tanto lo dejo como ClusterIP
+    selector:
+        app: es-ingest
+    ports:
+        - name: externo
+          port: 9200
+          targetPort: 9200
+        - name: interno
+          port: 9300
+          targetPort: 9300
+---
+kind: StatefulSet
+apiVersion: apps/v1
+
+metadata:
+    name: es-ingest
+    labels: 
+        app: es-ingest
+        
+spec:
+
+    replicas: 2
+    # que nombre van a recibir cada una de las replicas que generemos en este statefulset:
+    # Los nombres son CONOCIDOS A PRIORI:
+    #   es-ingest-0
+    #   es-ingest-1
+
+    selector:
+        matchLabels:
+            app: es-ingest
+
+    serviceName: es-ingest-svc
+    #   es-ingest-0.es-master-svc
+    #   es-ingest-1.es-master-svc
+    
+    template: # Plantilla del POD 
+        metadata:
+            labels: 
+                app: es-ingest
+
+        spec:
+            containers:
+                -   name: elasticsearch
+                    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+                    ports:
+                        - containerPort: 9200 # Se usa para comunicaciones externas
+                        - containerPort: 9300 # Se usa para comunicaciones internas
+                    envFrom:
+                        - configMapRef: 
+                            name: configuracion-es
+                        - configMapRef: 
+                            name: defaults-es
+                    env:
+                        - name: node.name # Debe ser único en el cluster
+                          valueFrom: 
+                            fieldRef:
+                                fieldPath: metadata.name # Propiedad name, del metadata del POD que se genere desde esta plantilla
+                        - name: node.ingest
+                          value: "true"
+                    volumeMounts:
+                        - name: datos-elasticsearch
+                          mountPath: /usr/share/elasticsearch/data
+
+    ### Para tener 1 volumen por pod
+    volumeClaimTemplates: # Plantilla de peticiones de Volumen 
+        -   metadata:
+                name: datos-elasticsearch
+
+            spec:
+                storageClassName: redundante # Tipo de volumen que necesito (Caractersisticas del volumen)
+                resources:
+                    requests:
+                        storage: 5Gi
+                accessModes:
+                    - ReadWriteOnce
+
+#########################################################################################################
+###     COORDINATOR
+#########################################################################################################
+---
+
+kind: Service
+apiVersion: v1
+
+metadata:
+    name: es-coordinator-svc
+
+spec:
+    type: ClusterIP # Este servicio no es privado, ya que se usa por clientes finales.
+                    # No obstante esto lo normal será publicarlo / exponerlo mediante un INGRESS CONTROLLER
+                    # Por lo tanto lo dejo como ClusterIP
+    selector:
+        app: es-coordinator
+    ports:
+        - name: externo
+          port: 9200
+          targetPort: 9200
+        - name: interno
+          port: 9300
+          targetPort: 9300
+---
+kind: StatefulSet
+apiVersion: apps/v1
+
+metadata:
+    name: es-coordinator
+    labels: 
+        app: es-coordinator
+        
+spec:
+
+    replicas: 2
+    # que nombre van a recibir cada una de las replicas que generemos en este statefulset:
+    # Los nombres son CONOCIDOS A PRIORI:
+    #   es-coordinator-0
+    #   es-coordinator-1
+
+    selector:
+        matchLabels:
+            app: es-coordinator
+
+    serviceName: es-coordinator-svc
+    #   es-coordinator-0.es-master-svc
+    #   es-coordinator-1.es-master-svc
+    
+    template: # Plantilla del POD 
+        metadata:
+            labels: 
+                app: es-coordinator
+
+        spec:
+            containers:
+                -   name: elasticsearch
+                    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+                    ports:
+                        - containerPort: 9200 # Se usa para comunicaciones externas
+                        - containerPort: 9300 # Se usa para comunicaciones internas
+                    envFrom:
+                        - configMapRef: 
+                            name: configuracion-es
+                        - configMapRef: 
+                            name: defaults-es
+                    env:
+                        - name: node.name # Debe ser único en el cluster
+                          valueFrom: 
+                            fieldRef:
+                                fieldPath: metadata.name # Propiedad name, del metadata del POD que se genere desde esta plantilla
+                    volumeMounts:
+                        - name: datos-elasticsearch
+                          mountPath: /usr/share/elasticsearch/data
+
+    ### Para tener 1 volumen por pod
+    volumeClaimTemplates: # Plantilla de peticiones de Volumen 
+        -   metadata:
+                name: datos-elasticsearch
+
+            spec:
+                storageClassName: redundante # Tipo de volumen que necesito (Caractersisticas del volumen)
+                resources:
+                    requests:
+                        storage: 5Gi
+                accessModes:
+                    - ReadWriteOnce

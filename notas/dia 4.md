@@ -63,7 +63,7 @@ pvc - pv ? Quien la hace? Kubernetes en base a unos criterios
 Provider < Alguien (POD) que se va a encargar de generar volumenes persistentes (pv) de forma automatica
 
 [ Plantilla - Volumen ] <>  [ pod ] <> [ Peticion de volumen ] <> [ volumen persistente ]
-DESARROLLADOR              KUBERNETES      DESARROLLADOR               ADMINISTRADOR / PRO CREADO POR EL ADMIN
+DESARROLLADOR              KUBERNETES      DESARROLLADOR               ADMINISTRADOR / PROVIDER CREADO POR EL ADMIN
                         
 DIA 0: Carga una petición de volumen persistente. Si hubiera un volumen disponible, se habría asociado en automatico.
 DIA 1: Carga una plantilla de POD

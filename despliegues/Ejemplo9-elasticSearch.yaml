@@ -1,0 +1,91 @@
+#########################################################################################################
+###     MAESTROS
+#########################################################################################################
+
+kind: Service
+apiVersion: v1
+
+metadata:
+    name: es-master-svc
+
+spec:
+    type: ClusterIP # Este servicio es privado por naturaleza
+    selector:
+        app: es-master
+    ports:
+        - name: externo
+          port: 9200
+          targetPort: 9200
+        - name: interno
+          port: 9300
+          targetPort: 9300
+
+#########################################################################################################
+
+kind: StatefulSet
+apiVersion: apps/v1
+
+metadata:
+    name: es-master
+
+spec:
+
+    replicas: 3
+    # que nombre van a recibir cada una de las replicas que generemos en este statefulset:
+    # Los nombres son CONOCIDOS A PRIORI:
+    #   es-master-0
+    #   es-master-1
+    #   es-master-2
+
+    selector:
+        matchLabels:
+            name: es-master
+    
+    serviceName: es-master-svc
+    #   es-master-svc
+    #   es-master-0.es-master-svc
+    #   es-master-1.es-master-svc
+    #   es-master-2.es-master-svc
+    
+    template: # Plantilla del POD 
+        metadata:
+            labels: 
+                app: es-master
+        
+        spec:
+            containers:
+                -   name: elasticsearch
+                    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+                    ports:
+                        - containerPort: 9200 # Se usa para comunicaciones externas
+                        - containerPort: 9300 # Se usa para comunicaciones internas
+                    env:
+                        - name: node.name # Debe ser único en el cluster
+                          valueFrom: 
+                            fieldRef:
+                                fieldPath: metadata.name # Propiedad name, del metadata del POD que se genere desde esta plantilla
+                        - name: cluster.name
+                          value: MiCluster
+                        - name: discovery.seed_hosts   # Maquinas. las puedo identificar en red a traves de una IP o nombre DNS
+                          # A quien le digo yo a este nodo conreto de ES que conoce de antemano
+                          value: es-master-0.es-master-svc,es-master-1.es-master-svc
+                        - name: cluster.initial_master_nodes   # Habla nodos (nombre) a nivel de ES
+                          value: es-master-0,es-master-1
+                        - name: ES_JAVA_OPTS
+                          value: "-Xms250m -Xmx250m"
+                        - name: node.master
+                          value: "true"
+                        - name: node.data
+                          value: "false"
+                        - name: node.ingest
+                          value: "false"
+                    volumeMounts:
+                        - name: datos-elasticsearch
+                          mountPath: /usr/share/elasticsearch/data
+
+
+### Para tener 1 volumen por pod
+            volumes:
+                - name: datos-elasticsearch
+                  persistentVolumeClaim:
+                    claimName: volumen-maestro

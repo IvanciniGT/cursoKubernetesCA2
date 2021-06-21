@@ -51,7 +51,7 @@ do
     shift
 done;
 
-kubectl delete pv master-1
+kubectl delete pv $NOMBRE
 mkdir -p $VOLUMEPATH
 sudo chmod 777 -R $VOLUMEPATH
 crearVolumen $NOMBRE $CLASSNAME $STORAGE $VOLUMEPATH

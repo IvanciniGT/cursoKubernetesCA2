@@ -38,3 +38,13 @@ Kibana 2
     Los kibanas son iguales entre si. Ya que ellos no guardan datos (sus datos realmente os guardan en ES)
 A mi realmente me da igual además que me pongan a trabajar contra un Kibana u otro... Son iguales.
     EN KUB: Deployment
+    
+    Kibana ofrece una interfaz gráfica WEB que tiene que ser accesible a los usuarios finales (serán seres humanos)
+        Esa interfaz funciona en el puerto 5601 <<<< SERVICIO
+    Como variables de configuraión tendremos que especificar:
+        SERVER_NAME: nombre del nodo concreto /particular, utilizado internamente para identificar cada kibana
+        SERVER_HOST: nombre del servicio a través del cual llegamos a kibana
+        ELASTICSEARCH_HOSTS: Apuntar a los nodos coordinadores, en su ruta completa: http://NOMBRE_IP_COORDINADOR:9200
+    Sabiendo que la imagen de kibana es igual que la de elasticsearch, pero poniendo "kibana" donde pone "elasticsearch"
+    Kibana no necesita su propio volumen persistente de ningñun tipo... ya que sus datos los guarda en ElasticSearch
+    

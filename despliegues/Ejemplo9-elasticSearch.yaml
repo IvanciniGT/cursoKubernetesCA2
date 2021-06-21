@@ -19,7 +19,7 @@ spec:
         - name: interno
           port: 9300
           targetPort: 9300
-
+---
 #########################################################################################################
 
 kind: StatefulSet
@@ -83,9 +83,15 @@ spec:
                         - name: datos-elasticsearch
                           mountPath: /usr/share/elasticsearch/data
 
-
 ### Para tener 1 volumen por pod
-            volumes:
-                - name: datos-elasticsearch
-                  persistentVolumeClaim:
-                    claimName: volumen-maestro
+    volumeClaimTemplates: # Plantilla de peticiones de Volumen 
+        -   metadata:
+                name: datos-elasticsearch
+
+            spec:
+                storageClassName: redundante # Tipo de volumen que necesito (Caractersisticas del volumen)
+                resources:
+                    requests:
+                        storage: 5Gi
+                accessModes:
+                    - ReadWriteOnce

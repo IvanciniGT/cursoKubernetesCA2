@@ -46,7 +46,7 @@ spec:
                         app: kibana     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         spec:
             containers:
-                -   # Contenedor nginx
+                -   # Contenedor kibana
                     name:   kibana
                     image:  docker.elastic.co/kibana/kibana:7.11.0
                     env:
@@ -60,3 +60,15 @@ spec:
                           value: http://es-coordinator-svc:9200
                     ports:
                         - containerPort: 5601   
+                    resources:
+                        requests:
+                            memory: 300Mi
+                            #cpu: 2  # número de cpus que puedo usar como máximo
+                                    # se mide por unidad de tiempo (s)
+                                    # En un segundo podrás utilizar el equivalente a tener 2 CPUS al 100% durante 1 segundo
+                                    # A lo mejor le tengo medio segundo sin darle acceso a la CPU, y luego en medio segundo le dejo usar 4 CPUs al 100%
+                            cpu: 1500m   # 1.5
+                            # En un segundo 1000 ms puedo estar usando cpus durante 1500ms en total   3 CPUS de cada una 500ms: 5 CPUs 300ms cada segundo
+                        #limits:
+                        #    cpu: 100m   # 1.5
+                        

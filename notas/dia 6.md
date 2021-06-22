@@ -141,3 +141,6 @@ El extra de RAM de un contenedor a qué se DEBE dedicar? CACHES! <<<< Rendimient
 
 En el WAS no tendré solo 1 pod en marcha... Tendré varios... cluster.
     Entre ellos activaré replicación de sesiones
+    
+    
+    nfs provisioner external subdir kubernetes

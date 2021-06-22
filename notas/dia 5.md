@@ -46,5 +46,5 @@ A mi realmente me da igual además que me pongan a trabajar contra un Kibana u o
         SERVER_HOST: nombre del servicio a través del cual llegamos a kibana
         ELASTICSEARCH_HOSTS: Apuntar a los nodos coordinadores, en su ruta completa: http://NOMBRE_IP_COORDINADOR:9200
     Sabiendo que la imagen de kibana es igual que la de elasticsearch, pero poniendo "kibana" donde pone "elasticsearch"
-    Kibana no necesita su propio volumen persistente de ningñun tipo... ya que sus datos los guarda en ElasticSearch
+    Kibana no necesita su propio volumen persistente de ningún tipo... ya que sus datos los guarda en ElasticSearch
     

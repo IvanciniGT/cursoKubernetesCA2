@@ -78,7 +78,7 @@ spec:
         metadata:
             labels: 
                 app: es-master
-
+                tipo: elasticSearch
         spec:
             containers:
                 -   name: elasticsearch
@@ -154,7 +154,7 @@ spec:
         metadata:
             labels: 
                 app: es-data
-
+                tipo: elasticSearch
         spec:
             containers:
                 -   name: elasticsearch
@@ -244,6 +244,7 @@ spec:
         metadata:
             labels: 
                 app: es-ingest
+                tipo: elasticSearch
 
         spec:
             containers:
@@ -334,6 +335,7 @@ spec:
         metadata:
             labels: 
                 app: es-coordinator
+                tipo: elasticSearch
 
         spec:
             containers:

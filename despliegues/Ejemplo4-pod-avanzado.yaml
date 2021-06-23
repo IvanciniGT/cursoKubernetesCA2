@@ -15,6 +15,20 @@ metadata:
                 app: advanced 
 
 spec:
+    initContainers:
+        -   # Estos son diferentes de los container normales.
+            # Un container normal, no puede acabar nunca.
+            # Un initContainer debe acabar siempre (SCRIPTS) que preaparn el terreno para el resto de containers.
+            
+            name:   nginx-container
+            image:  nginx:latest
+            ports:
+                - containerPort: 80     # Puramente informacional
+                                        # Por ahora....
+            volumeMounts:
+                - name: volumen1
+                  mountPath: /var/nginx/logs
+    
     containers:
     
         -   # Contenedor 1: nginx

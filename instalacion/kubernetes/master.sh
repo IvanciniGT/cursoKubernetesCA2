@@ -16,12 +16,13 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 # kubectl taint nodes --all node-role.kubernetes.io/master-
 # Esto nunca lo haríamos en un entorno de producción
 
+#kubeadm token create --print-join-command
+# kubeadm reset
 
+#            Service mess !!!!
+#ISTIO                VV
+#Linkerd     Service Mesh ;)
 
-            Service mess !!!!
-ISTIO                VV
-Linkerd     Service Mesh ;)
-
-TLS:
-    Man in the middle <<<<
-    Phishing
+#TLS:
+#    Man in the middle <<<<
+#    Phishing

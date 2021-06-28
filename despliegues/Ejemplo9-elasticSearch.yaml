@@ -6,7 +6,8 @@ metadata:
 
 data:
     cluster.name: MiCluster
-    ES_JAVA_OPTS: "-Xms250m -Xmx250m"
+    ES_JAVA_OPTS: "-Xms1250m -Xmx1250m" # Podrías cambiar el valor del configmap
+                                        # {{}}
 ---
 # Edsto otro solo lo monto por comodidad
 kind: ConfigMap

@@ -66,3 +66,48 @@ Jenkins : Servidor de CI/CD
 AzureDevops
 TravisCI
 Bamboo
+
+-----
+Helm 
+
+Helm dispone del concepto de CONTEXTO, 
+    del cual recuperamos información
+    
+Helm me da distintas variables (datos) a las que puedo acceder 
+Los datos se ubican dentro de un contexto.
+
+Pensad en el contexto como si fuera un filesystem LINUX
+
+/home/ubuntu
+     ^ Dentro de
+^ RAIZ    
+
+Igual ocurre en HELM
+El contexto raiz se llama $
+Dentro de lo marcamos con un PUNTO
+
+Por defecto, cuando arrancamos HELM, 
+    se me posiciona en el contexto $, en el RAIZ de los datos
+    
+
+values.yaml <<< sobre este sobrescribe los datos de los 
+                ficheros específicos que se suministren
+            <<< sobre lo generado sobreescribe los datos 
+                introducidos mediante el argumento --set
+                
+                
+
+Chart configES   <<<<<< values.produccion aumentar memoria
+                >>>> Te va a generar unos pods nuevos.
+                     Pero el service, el ingress, ... 
+                     siguen en funcionamiento
+    Secrets                    
+    ConfigMaps
+    ^^^^
+Chart ES   <<< redeploy
+                borrado y creado desde cero
+                    No tengo sistema
+    Deployments
+    Services
+    Ingress
+    StatefulSet

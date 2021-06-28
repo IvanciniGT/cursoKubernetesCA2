@@ -4,3 +4,10 @@ kibana:
         type: ClusterIP
         nodePort: 32000        
         port: 5601
+    
+    replicas: 2
+    image: docker.elastic.co/kibana/kibana
+   
+    requests:
+        memory: 10Mi
+        cpu: 1500m

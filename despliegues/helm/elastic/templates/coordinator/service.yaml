@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 
 metadata:
-    name: {{ .Release.Name }}-kibana-svc
+    name: {{ .Release.Name }}-coordinador-svc
     namespace: {{ .Release.Namespace }}         
 
 spec:

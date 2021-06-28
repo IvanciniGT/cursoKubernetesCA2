@@ -1,11 +1,27 @@
 NAME: miES
-LAST DEPLOYED: Mon Jun 28 10:34:19 2021
+LAST DEPLOYED: Mon Jun 28 11:52:52 2021
 NAMESPACE: pruebaES
 STATUS: pending-install
 REVISION: 1
 TEST SUITE: None
 HOOKS:
 MANIFEST:
+---
+# Source: elastic/templates/coordinator/service.yaml
+kind: Service
+apiVersion: v1
+
+metadata:
+    name: miES-coordinador-svc
+    namespace: pruebaES         
+
+spec:
+    type: ClusterIP 
+    selector:
+        app: miES-kibana
+    ports:
+        - port: 5601
+          targetPort: 5601
 ---
 # Source: elastic/templates/kibana/service.yaml
 kind: Service
@@ -18,7 +34,7 @@ metadata:
 spec:
     type: ClusterIP 
     selector:
-        app: kibana
+        app: miES-kibana
     ports:
         - port: 5601
           targetPort: 5601
@@ -32,27 +48,31 @@ apiVersion:     apps/v1
 
 
 metadata:
+
                 # Este es su identificador
-    name:       kibana
+    name:       miES-kibana
                 # Etiquetas, con un determinado valor.
                 # Qué etiquetas? Las que quiera.
+    namespace: pruebaES         
     labels:
-                app: kibana 
+                app: miES-kibana 
 spec:
-    replicas: 1
-    
+    replicas: 2
+
     selector:   
         matchLabels:
-            app: kibana    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            app: miES-kibana    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     template:
         metadata:
                         # Este es su identificador
-            name:       kibana-pod 
+            name:       miES-kibana-pod 
                         # Etiquetas, con un determinado valor.
                         # Qué etiquetas? Las que quiera.
             labels:
-                        app: kibana     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        app: miES-kibana     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
         spec:
             containers:
                 -   # Contenedor kibana
@@ -66,20 +86,13 @@ spec:
                         - name: SERVER_HOST
                           value: 0.0.0.0
                         - name: ELASTICSEARCH_HOSTS
-                          value: http://es-coordinator-svc:9200
+                          value: http://es-coordinator-svc:9200 # TODO
                     ports:
-                        - containerPort: 5601   
+                        - containerPort: 5601
                     resources:
                         requests:
-                            memory: 300Mi
-                            #cpu: 2  # número de cpus que puedo usar como máximo
-                                    # se mide por unidad de tiempo (s)
-                                    # En un segundo podrás utilizar el equivalente a tener 2 CPUS al 100% durante 1 segundo
-                                    # A lo mejor le tengo medio segundo sin darle acceso a la CPU, y luego en medio segundo le dejo usar 4 CPUs al 100%
-                            cpu: 1500m   # 1.5
-                            # En un segundo 1000 ms puedo estar usando cpus durante 1500ms en total   3 CPUS de cada una 500ms: 5 CPUs 300ms cada segundo
-                        #limits:
-                        #    cpu: 100m   # 1.5
+                            memory:  10Mi
+                            cpu: 1500m
 ---
 # Source: elastic/templates/kibana/hpa.yaml
 kind: HorizontalPodAutoscaler

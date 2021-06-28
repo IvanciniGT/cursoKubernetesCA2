@@ -1,0 +1,13 @@
+Introdcciones adicionales al despliegue.
+Todo lo que escribais en este fichero.
+Va a slir cuando se aplica el chart
+Con HELM
+
+Además, en este fichero también se pueden utilizar 
+plantilas de HELM.
+Por ejemplo:
+
+Kibana se ha instalado correctamente
+en el namespace {{ $.Release.Namespace}}
+
+Está funcionando en el puerto: {{ $.Values.kibana.service.port}}

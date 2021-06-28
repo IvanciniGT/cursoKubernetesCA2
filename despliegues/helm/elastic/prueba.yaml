@@ -1,10 +1,19 @@
+NAME: miES
+LAST DEPLOYED: Mon Jun 28 10:34:19 2021
+NAMESPACE: pruebaES
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+HOOKS:
+MANIFEST:
 ---
 # Source: elastic/templates/kibana/service.yaml
 kind: Service
 apiVersion: v1
 
 metadata:
-    name: kibana-svc
+    name: miES-kibana-svc
+    namespace: pruebaES         
 
 spec:
     type: ClusterIP 
@@ -89,3 +98,4 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
+

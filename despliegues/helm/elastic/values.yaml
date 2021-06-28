@@ -1,4 +1,6 @@
+# Datos por defecto
 kibana:
     service:
         type: ClusterIP
-        nodePort: 32000
+        nodePort: 32000        
+        port: 5601

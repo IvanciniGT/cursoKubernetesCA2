@@ -1,4 +1,5 @@
 kibana:
     service:
-        type: NodePort
         nodePort: 32500
+        
+ivan: 46

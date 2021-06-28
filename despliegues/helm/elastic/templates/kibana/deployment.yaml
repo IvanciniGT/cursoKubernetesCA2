@@ -31,7 +31,7 @@ spec:
             containers:
                 -   # Contenedor kibana
                     name:   kibana
-                    image:  docker.elastic.co/kibana/kibana:7.11.0
+                    image:  docker.elastic.co/kibana/kibana:{{ $.Chart.AppVersion }}
                     env:
                         - name: SERVER_NAME
                           valueFrom: 

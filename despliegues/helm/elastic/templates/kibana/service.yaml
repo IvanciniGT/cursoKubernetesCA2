@@ -3,15 +3,18 @@ kind: Service
 apiVersion: v1
 
 metadata:
-    name: kibana-svc
+    name: {{ .Release.Name }}-kibana-svc
+    namespace: {{ .Release.Namespace }}         
 
 spec:
     type: {{ .Values.kibana.service.type }} 
     selector:
         app: kibana
     ports:
-        - port: 5601
-          targetPort: 5601
+        - port: {{ .Values.kibana.service.port }}
+          targetPort: {{ .Values.kibana.service.port }}
           {{ if eq .Values.kibana.service.type "NodePort" }}
           nodePort: {{ .Values.kibana.service.nodePort }}
           {{ end }}
+
+

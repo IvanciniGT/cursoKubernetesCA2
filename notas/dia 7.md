@@ -159,3 +159,17 @@ Su clave privada                                                     > Gestionad
 CA                                                                  |
 
 Reglas de RED, si trabajo con ISTIO, quien las va a gestionar > ISTIO > Envoys
+
+
+Europa:
+    Nodo 1- zona: Europa
+        Pod: nginx
+    Nodo 2- zona: Europa
+
+Asia:
+    Nodo 3- zona: Asia
+    Nodo 4- zona: Asia
+
+
+La topologia: DIVIDE LOS NODOS EN GRUPOS
+    hostname: Nombre de la maquina

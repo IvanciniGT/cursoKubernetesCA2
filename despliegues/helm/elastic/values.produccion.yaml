@@ -1,0 +1,4 @@
+kibana:
+    service:
+        type: NodePort
+        nodePort: 32500

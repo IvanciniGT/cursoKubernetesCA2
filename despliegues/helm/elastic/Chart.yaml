@@ -1,0 +1,11 @@
+apiVersion: v2 # Versión de HELM
+name: elastic
+description: Chart para desplegar ElasticSearch con Kibana
+
+type: application
+
+version: 0.1.0   # Versión del Chart
+appVersion: "7.11.0"    # Versión de la aplciación que voy a instalar a traves de este Chart (ELASTICSEARCH)
+
+# Parametros informativos
+# Dependencias

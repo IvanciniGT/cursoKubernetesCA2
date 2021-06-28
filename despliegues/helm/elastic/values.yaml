@@ -1,0 +1,4 @@
+kibana:
+    service:
+        type: ClusterIP
+        nodePort: 32000

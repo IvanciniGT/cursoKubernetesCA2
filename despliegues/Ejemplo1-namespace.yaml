@@ -4,4 +4,4 @@ kind: Namespace
 apiVersion: v1
 
 metadata:
-    name: prueba # Este es su identificador
+    name: ivan # Este es su identificador
